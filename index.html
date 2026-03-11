@@ -17,7 +17,6 @@
 }
 body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-height:100vh}
 
-/* HEADER */
 .hdr{background:var(--ink);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.5)}
 .htitle{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.1em;color:#fff}
 .hsub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#666;letter-spacing:.12em;margin-top:1px}
@@ -37,19 +36,16 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-seri
 
 .body{padding:20px 24px}
 
-/* SOURCE BAR */
 .sbar{background:var(--sur);border:1px solid var(--brd);border-radius:5px;padding:8px 14px;margin-bottom:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut);display:flex;align-items:center;gap:8px}
 .sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#b45309;transition:background .3s}
 .sdot.live{background:#1a7a4a}
 
-/* KPI GRID */
+/* KPI */
 .kgrid{display:grid;grid-template-columns:150px repeat(4,1fr);gap:12px;margin-bottom:18px}
-
 .kbig{background:var(--ink);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;justify-content:center}
 .kbig-top{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#777;text-transform:uppercase;letter-spacing:.14em;margin-bottom:4px}
 .kbig-n{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;color:#fff}
 .kbig-bot{font-size:10px;color:#555;margin-top:3px;font-family:'IBM Plex Mono',monospace}
-
 .kcard{background:var(--sur);border:1px solid var(--brd);border-radius:8px;padding:13px 15px}
 .ktop{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--mut);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--brd)}
 .knums{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
@@ -64,13 +60,11 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-seri
 .chrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
 .cc{background:var(--sur);border:1px solid var(--brd);border-radius:8px;padding:14px 16px}
 .ctit{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--mut);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--brd)}
-
 .vb{display:flex;align-items:center;gap:7px;margin-bottom:6px}
 .vblbl{font-size:11px;width:90px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vbtr{flex:1;height:10px;background:var(--s2);border-radius:2px;overflow:hidden}
 .vbfi{height:100%;background:var(--ink);border-radius:2px;transition:width .8s}
 .vbn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mut);width:20px;text-align:right}
-
 .dwrap{display:flex;align-items:center;gap:12px}
 .dlr{display:flex;align-items:center;gap:6px;margin-bottom:5px}
 .dld{width:8px;height:8px;border-radius:2px;flex-shrink:0}
@@ -84,7 +78,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-seri
 .fb:hover{border-color:var(--ink)}
 .fb.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .fbcount{font-size:10px;opacity:.7}
-.sbox{margin-left:auto;padding:6px 12px;border:1px solid var(--brd);border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--sur);color:var(--ink);width:280px;outline:none}
+.sbox{margin-left:auto;padding:6px 12px;border:1px solid var(--brd);border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--sur);color:var(--ink);width:300px;outline:none}
 .sbox:focus{border-color:var(--ink)}
 
 /* TABLE */
@@ -94,22 +88,17 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-seri
 .tcnt{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut)}
 .tscroll{overflow-x:auto;max-height:600px;overflow-y:auto}
 table{width:100%;border-collapse:collapse;min-width:1200px}
-thead th{
-  background:var(--s2);padding:9px 12px;text-align:left;
-  font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;
-  letter-spacing:.08em;color:var(--mut);border-bottom:2px solid var(--brd);
-  white-space:nowrap;position:sticky;top:0;z-index:4;cursor:pointer;user-select:none
-}
+thead th{background:var(--s2);padding:9px 12px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);border-bottom:2px solid var(--brd);white-space:nowrap;position:sticky;top:0;z-index:4;cursor:pointer;user-select:none}
 thead th:hover{background:#ece9e4;color:var(--ink)}
-.sort-ico{margin-left:3px;opacity:.4;font-style:normal}
+.si{margin-left:3px;opacity:.4;font-style:normal;font-size:9px}
 tbody tr{border-bottom:1px solid var(--brd);transition:background .1s}
 tbody tr:hover{background:var(--s2)}
-tbody td{padding:8px 12px;font-size:12px;white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+tbody td{padding:8px 12px;font-size:12px;white-space:nowrap}
 .mn{font-family:'IBM Plex Mono',monospace;font-size:11px}
 .rn{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.04em}
 .mtag{display:inline-block;border:1px solid;border-radius:2px;padding:1px 5px;font-size:9px;font-family:'IBM Plex Mono',monospace}
 .sno{color:var(--mut);font-family:'IBM Plex Mono',monospace;font-size:11px}
-.rem{font-size:11px;color:var(--red);font-style:italic;white-space:normal;line-height:1.4}
+.rem{font-size:11px;color:var(--red);font-style:italic;white-space:normal;line-height:1.4;max-width:200px}
 .bdg{display:inline-flex;align-items:center;padding:2px 7px;border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;white-space:nowrap}
 .b-d{background:var(--gbg);color:var(--grn)}
 .b-pd{background:#fce7f3;color:#9d174d}
@@ -129,51 +118,55 @@ mark{background:#fef08a;border-radius:2px;padding:0 1px;color:inherit}
   </div>
   <div class="hright">
     <div class="hbdg cached" id="hbdg">● CACHED</div>
-    <div class="hmeta" id="hmeta">104 vehicles</div>
+    <div class="hmeta" id="hmeta">105 vehicles</div>
     <button class="rbtn" onclick="tryLive()">⟳ Try Live</button>
   </div>
 </div>
 <div class="lbar"><div class="lf" id="lf"></div></div>
 
 <div class="body">
-  <div class="sbar"><div class="sdot" id="sdot"></div><span id="stext">Showing embedded data (104 records) · Click "Try Live" to fetch latest from Google Sheets</span></div>
+  <div class="sbar"><div class="sdot" id="sdot"></div><span id="stext">Showing embedded data · Click "Try Live" to fetch latest from Google Sheets</span></div>
 
-  <!-- KPI -->
+  <!-- KPI — values locked from your sheet header -->
   <div class="kgrid">
     <div class="kbig">
       <div class="kbig-top">Inspection Completed</div>
-      <div class="kbig-n" id="k-tot">104</div>
+      <div class="kbig-n">105</div>
       <div class="kbig-bot">total vehicles</div>
     </div>
+    <!-- Profile Creation: Pendency=15, Completed=90 -->
     <div class="kcard">
       <div class="ktop">Profile Creation</div>
       <div class="knums">
-        <div class="kc"><span class="kn a" id="k-pcp">23</span><div class="kl">Pendency</div></div>
-        <div class="kc"><span class="kn g" id="k-pcc">81</span><div class="kl">Completed</div></div>
+        <div class="kc"><span class="kn a">15</span><div class="kl">Pendency</div></div>
+        <div class="kc"><span class="kn g">90</span><div class="kl">Completed</div></div>
       </div>
-      <div class="prog"><div class="pfill" id="b-pc" style="background:var(--grn)"></div></div>
+      <div class="prog"><div class="pfill" style="background:var(--grn);width:86%"></div></div>
     </div>
+    <!-- Pending Approval from Citi: Pendency=16, Completed=74 -->
     <div class="kcard">
       <div class="ktop">Pending Approval from Citi</div>
       <div class="knums">
-        <div class="kc"><span class="kn a" id="k-cip">7</span><div class="kl">Pendency</div></div>
-        <div class="kc"><span class="kn g" id="k-cic">74</span><div class="kl">Completed</div></div>
+        <div class="kc"><span class="kn a">16</span><div class="kl">Pendency</div></div>
+        <div class="kc"><span class="kn g">74</span><div class="kl">Completed</div></div>
       </div>
-      <div class="prog"><div class="pfill" id="b-ci" style="background:var(--grn)"></div></div>
+      <div class="prog"><div class="pfill" style="background:var(--grn);width:82%"></div></div>
     </div>
+    <!-- Pending for Deployment: Pendency=29, Completed=45 -->
     <div class="kcard">
       <div class="ktop">Pending for Deployment</div>
       <div class="knums">
-        <div class="kc"><span class="kn a" id="k-dep">29</span><div class="kl">Pendency</div></div>
-        <div class="kc"><span class="kn g" id="k-dec">45</span><div class="kl">Completed</div></div>
+        <div class="kc"><span class="kn a">29</span><div class="kl">Pendency</div></div>
+        <div class="kc"><span class="kn g">45</span><div class="kl">Completed</div></div>
       </div>
-      <div class="prog"><div class="pfill" id="b-de" style="background:var(--amb)"></div></div>
+      <div class="prog"><div class="pfill" style="background:var(--amb);width:61%"></div></div>
     </div>
+    <!-- Issues: computed from data -->
     <div class="kcard">
       <div class="ktop">Issues / Flags</div>
       <div class="knums">
-        <div class="kc"><span class="kn r" id="k-iss">0</span><div class="kl">Flagged</div></div>
-        <div class="kc"><span class="kn g" id="k-ok">104</span><div class="kl">Clean</div></div>
+        <div class="kc"><span class="kn r" id="k-iss">—</span><div class="kl">Flagged</div></div>
+        <div class="kc"><span class="kn g" id="k-ok">—</span><div class="kl">Clean</div></div>
       </div>
       <div style="font-size:9px;color:var(--mut);font-family:'IBM Plex Mono',monospace;margin-top:6px">Not responding · Suspended · Portal</div>
     </div>
@@ -199,8 +192,8 @@ mark{background:#fef08a;border-radius:2px;padding:0 1px;color:inherit}
     <button class="fb" onclick="sf('deployed',this)">✓ Deployed <span class="fbcount" id="fc-dep"></span></button>
     <button class="fb" onclick="sf('pending',this)">⏳ Pending <span class="fbcount" id="fc-pend"></span></button>
     <button class="fb" onclick="sf('issue',this)">⚠ Issues <span class="fbcount" id="fc-iss"></span></button>
-    <input class="sbox" type="text" id="srchbox"
-      placeholder="Search any field: reg no, driver, mobile, vendor, date..."
+    <input class="sbox" id="srchbox" type="text"
+      placeholder="Search: reg no, driver, mobile, vendor, date, remarks..."
       oninput="st(this.value)">
   </div>
 
@@ -208,23 +201,23 @@ mark{background:#fef08a;border-radius:2px;padding:0 1px;color:inherit}
   <div class="twrap">
     <div class="ttop">
       <span class="ttl">Vehicle Records</span>
-      <span class="tcnt" id="tcnt">104 records</span>
+      <span class="tcnt" id="tcnt">105 records</span>
     </div>
     <div class="tscroll">
       <table>
         <thead><tr>
-          <th onclick="doSort(0)">S.No <i class="sort-ico" id="si0">↕</i></th>
-          <th onclick="doSort(1)">Inspection Approval Date <i class="sort-ico" id="si1">↕</i></th>
-          <th onclick="doSort(2)">Reg No. <i class="sort-ico" id="si2">↕</i></th>
-          <th onclick="doSort(3)">Model <i class="sort-ico" id="si3">↕</i></th>
-          <th onclick="doSort(4)">Driver Name <i class="sort-ico" id="si4">↕</i></th>
-          <th onclick="doSort(5)">Mobile Number <i class="sort-ico" id="si5">↕</i></th>
-          <th onclick="doSort(6)">Vendor Name <i class="sort-ico" id="si6">↕</i></th>
-          <th onclick="doSort(7)">Email Sent for Approval Date <i class="sort-ico" id="si7">↕</i></th>
-          <th onclick="doSort(8)">Admin Approval Date <i class="sort-ico" id="si8">↕</i></th>
-          <th onclick="doSort(9)">Deployment Date <i class="sort-ico" id="si9">↕</i></th>
+          <th onclick="doSort(0)">S.No<i class="si" id="si0">↕</i></th>
+          <th onclick="doSort(1)">Inspection Approval Date<i class="si" id="si1">↕</i></th>
+          <th onclick="doSort(2)">Reg No.<i class="si" id="si2">↕</i></th>
+          <th onclick="doSort(3)">Model<i class="si" id="si3">↕</i></th>
+          <th onclick="doSort(4)">Driver Name<i class="si" id="si4">↕</i></th>
+          <th onclick="doSort(5)">Mobile Number<i class="si" id="si5">↕</i></th>
+          <th onclick="doSort(6)">Vendor Name<i class="si" id="si6">↕</i></th>
+          <th onclick="doSort(7)">Email Sent for Approval Date<i class="si" id="si7">↕</i></th>
+          <th onclick="doSort(8)">Admin Approval Date<i class="si" id="si8">↕</i></th>
+          <th onclick="doSort(9)">Deployment Date<i class="si" id="si9">↕</i></th>
           <th>Status</th>
-          <th onclick="doSort(10)">Remarks <i class="sort-ico" id="si10">↕</i></th>
+          <th onclick="doSort(10)">Remarks<i class="si" id="si10">↕</i></th>
         </tr></thead>
         <tbody id="tbody"></tbody>
       </table>
@@ -233,7 +226,7 @@ mark{background:#fef08a;border-radius:2px;padding:0 1px;color:inherit}
 </div>
 
 <script>
-// ─── EMBEDDED DATA (104 records — always works offline) ───────────────
+// ─── EMBEDDED DATA — 105 records (updated from latest sheet) ──────────
 const RAW=[
 [1,"21 Feb","TN61Z4748","DZIRE","RAJA SELVAM","8524078364","JOYS","28 Feb","28-Feb","","05 March"],
 [2,"21 Feb","TN61Z4030","DZIRE","MARUTHUPANDIYAN","9751105482","JOYS","28 Feb","28 Feb","","Not responding"],
@@ -249,103 +242,98 @@ const RAW=[
 [12,"27 Feb","TN07DJ6321","DZIRE","SANKAR KALIRAJ","9962770569","Lohith Cabs","01 Mar","01-Mar","02 Mar",""],
 [13,"27 Feb","TN03AQ4401","DZIRE","SUSHILKUMAR","8072263708","R 6","01 Mar","01-Mar","06 Mar","Not responding"],
 [14,"27 Feb","TN22EE0704","DZIRE","ARUN","9884139042","SR TRAVELS","01 Mar","01-Mar","",""],
-[15,"28 Feb","TN85U5510","DZIRE","SHOBAN BABU","98841J80790","AKC","01 Mar","01-Mar","03 Mar",""],
-[16,"28 Feb","TN11BM8749","DZIRE","RAJI","8778138316","AKC","01 Mar","01-Mar","03 Mar",""],
-[17,"28 Feb","TN22EB6870","DZIRE","LINGESH KUMAR","9941220885","AKC","01 Mar","01-Mar","05 Mar",""],
-[18,"28 Feb","TN12BR9511","ERTIGA","KANNAN","9790718158","R 6","01 Mar","01 Mar","02-Mar",""],
-[19,"28 Feb","TN10BZ9830","HYUNDAI AURA","STEPHEN RAJ","8939180669","AKC","02 Mar","02 Mar","03 Mar",""],
-[20,"28 Feb","TN25CK0882","KIA CARENS","PRASANTH","9080129652","SR TRAVELS","02 Mar","02 Mar","03 Mar",""],
-[21,"28 Feb","TN07DM9886","DZIRE","SILAMBARASAN","9840860622","AKC","03 Mar","03 Mar","03 Mar",""],
-[22,"28 Feb","TN09DL1716","ERTIGA","SENTHIL KUMAR C","8531839416","Fiesta","05 Mar","05 Mar","","09 March"],
-[23,"28 Feb","TN09DE3393","TIGOREV","RAJA S","8524078364","Fiesta","05 Mar","05 Mar","","Not responding"],
-[24,"28 Feb","TN96F9936","DZIRE","SANKARANARAYANAN R","8248401214","Fiesta","05 Mar","05 Mar","03 Mar",""],
-[25,"28 Feb","TN97F3163","DZIRE","THAMOTHIRAN J","6369545677","Fiesta","05 Mar","05 Mar","04 Mar",""],
-[26,"02 Mar","TN14AQ2837","HYUNDAI AURA","SATHI RAMASAMY","6382491480","A2 CABS","04 Mar","04 Mar","",""],
-[27,"02 Mar","TN01BV7027","DZIRE","ANAND","9789956679","R 6","04 Mar","04 Mar","05 Mar",""],
-[28,"02 Mar","TN07DK2587","DZIRE","BABU","7305611623","R 6","04 Mar","04 Mar","10 Mar",""],
-[29,"02 Mar","TN63CV5330","ERTIGA","SENTHIL KUMAR","8825887336","KUKU TRAVELS","09 Mar","10 Mar","11 Mar","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],
-[30,"02 Mar","TN25CM9087","DZIRE","RAJESH","9600672167","ANAND KUMAR","","","","DRIVER LICENSE SUSPENDED"],
-[31,"03 Mar","TN11BL4521","DZIRE","VICTOR NITHYANANDAM","8807506239","GANESH","04 Mar","05 Mar","06 Mar",""],
-[32,"03 Mar","TN25CH4223","DZIRE","VASANTH","7550203105","KUKU TRAVELS","04 Mar","05 Mar","10 Mar",""],
-[33,"03 Mar","TN51AV5541","DZIRE","KABILAN","7845451664","SUPREME","04 Mar","05 Mar","06 Mar",""],
-[34,"03 Mar","TN11BP2898","RUMION","JOHN ALBERT","9566150684","R 6","04 Mar","10 Mar","",""],
-[35,"03 Mar","TN11BS2724","DZIRE","RAJESH","7904046553","A2 CABS","04 Mar","05 Mar","06 Mar",""],
-[36,"03 Mar","TN18CB6694","DZIRE","RAJESH","8124045140","JOYS","04 Mar","","",""],
-[37,"03 Mar","TN12BB5097","DZIRE","PRABHAKARAN","9994229488","SVT","05 Mar","","","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],
-[38,"03 Mar","TN11BS0198","ERTIGA","MURUGAN","8056132330","KUKU TRAVELS","09 Mar","10 Mar","11 Mar","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],
-[39,"04 Mar","TN32BH0535","DZIRE","PRAVEEN KUMAR","9047670589","S.J. CABS","05 Mar","05 Mar","09 Mar",""],
-[40,"04 Mar","TN07DH1031","DZIRE","RAVIKUMAR","9884202332","S.J. CABS","05 Mar","05 Mar","",""],
-[41,"04 Mar","TN18BU0274","DZIRE","SURESH","7010056037","SUPREME","05 Mar","05 Mar","",""],
-[42,"04 Mar","TN32BF3422","DZIRE","VENKATESH PERUMAL","8489804601","S.J. CABS","05 Mar","05 Mar","09 Mar",""],
-[43,"04 Mar","TN22EH2921","DZIRE","LOGESHWARAN","9940438777","R 6","05 Mar","05 Mar","10 Mar",""],
-[44,"04 Mar","TN65CZ7142","ERTIGA","AATHINARAYANA MOORTHI","9585615910","R 6","05 Mar","05 Mar","06 Mar",""],
-[45,"04 Mar","TN19BD5841","DZIRE","PERUMAL R","7092022710","A2 CABS","05 Mar","05 Mar","",""],
-[46,"04 Mar","TN20DL4934","ROMION","BALAJI S","9080348442","SUPREME","05 Mar","05 Mar","09 Mar",""],
-[47,"04 Mar","TN32BE7871","DZIRE","RAJA S","","S.J.CABS","05 Mar","05 Mar","09 Mar",""],
-[48,"04 Mar","TN03AR0144","ERTIGA","DURAI KANNU","9710242600","Agnipoo","","","",""],
-[49,"04 Mar","TN25CK7061","ERTIGA","BRITTO JOHNSON","7975832913","Royal Cabs","","","",""],
-[50,"04 Mar","TN11BF4298","DZIRE","","","","","","",""],
-[51,"04 Mar","TN82Q0280","ERTIGA","","","","","","",""],
-[52,"04 Mar","TN23DE4993","ERTIGA","","","","","","",""],
-[53,"04 Mar","TN47CX3963","DZIRE","MANIMARAN K","9003023231","STC","05 Mar","05 Mar","09 Mar",""],
-[54,"03 Mar","TN11BU1057","ERTIGA","ANBU MURUGAN P","8072272704","FIESTA","06 Mar","07 Mar","09 Mar",""],
-[55,"03 Mar","TN16AZ0768","DZIRE","SHAHUL HAMEED B","7401010562","FIESTA","06 Mar","07 Mar","09 Mar",""],
-[56,"03 Mar","TN09DK9708","XUV 400 EV","HAMEED G","9791124379","FIESTA","06 Mar","07 Mar","",""],
-[57,"03 Mar","TN09DK9743","XUV 400 EV","MOHAN H","8667447820","FIESTA","06 Mar","07 Mar","09 Mar",""],
-[58,"5 Mar","TN12BR6221","ERTIGA","SARAN RAJ","9952052787","SMT (CC)","07 Mar","","",""],
-[59,"5 Mar","TN31CK1868","ERTIGA","KARTHIK","7904953343","AGNI","07 Mar","08 Mar","09 Mar",""],
-[60,"5 Mar","TN97U9684","ERTIGA","SARAVANAN","8015035358","SRI SAI","07 Mar","","",""],
-[61,"5 Mar","TN14AL1190","DZIRE","AMBEDKAR RAJKUMAR","7010526192","AM TRAVELS","07 Mar","08 Mar","",""],
-[62,"5 Mar","TN15H5136","DZIRE","KUMARAGURU","9524062755","BABITHA","07 Mar","08 Mar","",""],
-[63,"5 Mar","TN16K5938","DZIRE","SATHISH","7639128659","SMT (CC)","07 Mar","08 Mar","",""],
-[64,"5 Mar","TN32BK0978","DZIRE","CELLAKUMAR","9384618116","BABITHA","07 Mar","08 Mar","09 Mar",""],
-[65,"5 Mar","TN23DW6835","DZIRE","THIYAGARAJAN","9787052276","AGNI","07 Mar","","",""],
-[66,"5 Mar","TN10BX0424","HYUNDAI AURA","SURESH","8637407745","BABITHA","07 Mar","08 Mar","10 Mar",""],
-[67,"6 Mar","TN12BH3822","DZIRE","DHANASEKAR","7904925266","SRI SAI","07 Mar","08 Mar","09 Mar",""],
-[68,"6 Mar","TN72CK1976","DZIRE","SENTHIL KUMAR","6385601058","LOHITH","07 Mar","","",""],
-[69,"6 Mar","TN19BE2922","DZIRE","RAKESH","9345652117","AGNI","07 Mar","08 Mar","",""],
-[70,"6 Mar","TN12BR8548","ERTIGA","AJITH RAJ","9551215153","SR TRAVELS","07 Mar","08 Mar","09 Mar",""],
-[71,"6 Mar","TN75BC1365","DZIRE","REJIN","7708751991","BABITHA","07 Mar","08 Mar","10 Mar",""],
-[72,"7 Mar","TN10BX1830","ERTIGA","VIGNESH","9944902726","Anand Kumar","08 Mar","08 Mar","",""],
-[73,"7 Mar","TN18BH6959","DZIRE","CHITHIRAI KUMAR","","Vignesh","","","",""],
-[74,"7 Mar","TN91AC7362","DZIRE","KALAIVENDHAN","8270061689","Agnipoo","10 Mar","10 Mar","11 Mar",""],
-[75,"7 Mar","TN07DL3981","ERTIGA","MAGESH","9361099826","SMT","08 Mar","08 Mar","",""],
-[76,"7 Mar","TN02CC7274","HYUNDAI AURA","SHANMUGABALAN J","","SMT","08 Mar","08 Mar","",""],
-[77,"7 Mar","TN11BL2952","ERTIGA","SUBRAMANIAN","","SRI SAI","08 Mar","08 Mar","",""],
-[78,"7 Mar","TN11BP1572","ERTIGA","MANI","","SMT","08 Mar","08 Mar","",""],
-[79,"7 Mar","TN11BQ6411","ERTIGA","RAJESH KUMAR","","Babitha","08 Mar","","",""],
-[80,"7 Mar","TN97AZ7760","DZIRE","SANTHOSH KUMAR","","","","","",""],
-[81,"7 Mar","TN63BU2586","ERTIGA","SASIKUMAR","","SMT","10 Mar","10 Mar","",""],
-[82,"7 Mar","TN15MK8602","ERTIGA","VISHNURAJ","","SMT","10 Mar","10 Mar","",""],
-[83,"7 Mar","TN14AS2532","ERTIGA","KAGVIDOSS","","","10 Mar","10 Mar","",""],
-[84,"7 Mar","TN05CZ2802","DZIRE","MOHAMMED YOUSUF","","Lohith","08 Mar","08 Mar","10 Mar",""],
-[85,"7 Mar","TN23DV0535","ERTIGA","ZAHOOR BASHA","","SMT","10 Mar","10 Mar","",""],
-[86,"7 Mar","TN05CT4716","ERTIGA","MURUGAN","","Babitha","08 Mar","08 Mar","",""],
-[87,"7 Mar","TN11BQ6412","ERTIGA","INFANT RAJ","","Babitha","10 Mar","10 Mar","",""],
-[88,"7 Mar","TN85X2188","ERTIGA","MANOHAVA","","SMT","10 Mar","10 Mar","",""],
-[89,"7 Mar","TN75BD9319","DZIRE","SASIN JR","","Babitha","08 Mar","08 Mar","11 Mar",""],
-[90,"9 Mar","TN19BA1509","DZIRE","RAMESH K","9025684365","SUPREME","","","",""],
-[91,"9 Mar","TN09DL8431","DZIRE","JEEVANANDAM","8610282264","SJ CABS","","","",""],
-[92,"9 Mar","TN11BJ4549","DZIRE","RAJESHKHANNA","9080127776","SJ CABS","","","",""],
-[93,"9 Mar","TN81AX1805","ERTIGA","SENTHIPANDI","8148925927","Babitha","","","",""],
-[94,"9 Mar","TN05CZ2484","DZIRE","ARVIND","7550052484","STC","","","",""],
-[95,"9 Mar","TN12BE7313","DZIRE","DEVARAJ","9176904400","SJ CABS","","","",""],
-[96,"9 Mar","TN10CB5707","DZIRE","MUTHUKUMAR","8940399694","Babitha","","","",""],
-[97,"9 Mar","TN11BP3883","DZIRE","VINOTH KUMAR","7639618484","RAKSHAN TRAVELS","","","",""],
-[98,"9 Mar","TN12BM5256","DZIRE","MANI","9042062967","SMT","","","",""],
-[99,"9 Mar","TN18BW9930","DZIRE","GNANASEKAR","9952187859","RAKSHAN TRAVELS","","","",""],
-[100,"9 Mar","TN19BC6502","DZIRE","MANIKANDAN","9176306892","RAKSHAN TRAVELS","","","",""],
-[101,"9 Mar","TN07DJ7378","DZIRE","ANANDRAJ","9080090019","Babitha","","","",""],
-[102,"10 Mar","TN12BR8075","DZIRE","LOGESH","8778569513","","","","",""],
-[103,"10 Mar","TN63BT8469","ERTIGA","PACKIYARAJ","7550260917","","","","",""],
-[104,"10 Mar","TN15F7989","DZIRE","SURESH","8220968625","","","","",""],
+[15,"27 Feb","TN85W7926","DZIRE","Joseph Corneliu","","R6","11 Mar","","",""],
+[16,"28 Feb","TN85U5510","DZIRE","SHOBAN BABU","98841J80790","AKC","01 Mar","01-Mar","03 Mar",""],
+[17,"28 Feb","TN11BM8749","DZIRE","RAJI","8778138316","AKC","01 Mar","01-Mar","03 Mar",""],
+[18,"28 Feb","TN22EB6870","DZIRE","LINGESH KUMAR","9941220885","AKC","01 Mar","01-Mar","05 Mar",""],
+[19,"28 Feb","TN12BR9511","ERTIGA","KANNAN","9790718158","R 6","01 Mar","01 Mar","02-Mar",""],
+[20,"28 Feb","TN10BZ9830","HYUNDAI AURA","STEPHEN RAJ","8939180669","AKC","02 Mar","02 Mar","03 Mar",""],
+[21,"28 Feb","TN25CK0882","KIA CARENS","PRASANTH","9080129652","SR TRAVELS","02 Mar","02 Mar","03 Mar",""],
+[22,"28 Feb","TN07DM9886","DZIRE","SILAMBARASAN","9840860622","AKC","03 Mar","03 Mar","03 Mar",""],
+[23,"28 Feb","TN09DL1716","ERTIGA","SENTHIL KUMAR C","8531839416","Fiesta","05 Mar","05 Mar","","09 March"],
+[24,"28 Feb","TN09DE3393","TIGOREV","RAJA S","8524078364","Fiesta","05 Mar","05 Mar","","Not responding"],
+[25,"28 Feb","TN96F9936","DZIRE","SANKARANARAYANAN R","8248401214","Fiesta","05 Mar","05 Mar","03 Mar",""],
+[26,"28 Feb","TN97F3163","DZIRE","THAMOTHIRAN J","6369545677","Fiesta","05 Mar","05 Mar","04 Mar",""],
+[27,"02 Mar","TN14AQ2837","HYUNDAI AURA","SATHI RAMASAMY","6382491480","A2 CABS","04 Mar","04 Mar","",""],
+[28,"02 Mar","TN01BV7027","DZIRE","ANAND","9789956679","R 6","04 Mar","04 Mar","05 Mar",""],
+[29,"02 Mar","TN07DK2587","DZIRE","BABU","7305611623","R 6","04 Mar","04 Mar","10 Mar",""],
+[30,"02 Mar","TN63CV5330","ERTIGA","SENTHIL KUMAR","8825887336","KUKU TRAVELS","09 Mar","10 Mar","11 Mar","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],
+[31,"02 Mar","TN25CM9087","DZIRE","RAJESH","9600672167","ANAND KUMAR","","","","DRIVER LICENSE SUSPENDED"],
+[32,"03 Mar","TN11BL4521","DZIRE","VICTOR NITHYANANDAM","8807506239","GANESH","04 Mar","05 Mar","06 Mar",""],
+[33,"03 Mar","TN25CH4223","DZIRE","VASANTH","7550203105","KUKU TRAVELS","04 Mar","05 Mar","10 Mar",""],
+[34,"03 Mar","TN51AV5541","DZIRE","KABILAN","7845451664","SUPREME","04 Mar","05 Mar","06 Mar",""],
+[35,"03 Mar","TN11BP2898","RUMION","JOHN ALBERT","9566150684","R 6","04 Mar","10 Mar","",""],
+[36,"03 Mar","TN11BS2724","DZIRE","RAJESH","7904046553","A2 CABS","04 Mar","05 Mar","06 Mar",""],
+[37,"03 Mar","TN18CB6694","DZIRE","RAJESH","8124045140","JOYS","04 Mar","","",""],
+[38,"03 Mar","TN12BB5097","DZIRE","PRABHAKARAN","9994229488","SVT","05 Mar","","","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],
+[39,"03 Mar","TN11BS0198","ERTIGA","MURUGAN","8056132330","KUKU TRAVELS","09 Mar","10 Mar","11 Mar","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],
+[40,"04 Mar","TN32BH0535","DZIRE","PRAVEEN KUMAR","9047670589","S.J. CABS","05 Mar","05 Mar","09 Mar",""],
+[41,"04 Mar","TN07DH1031","DZIRE","RAVIKUMAR","9884202332","S.J. CABS","05 Mar","05 Mar","",""],
+[42,"04 Mar","TN18BU0274","DZIRE","SURESH","7010056037","SUPREME","05 Mar","05 Mar","",""],
+[43,"04 Mar","TN32BF3422","DZIRE","VENKATESH PERUMAL","8489804601","S.J. CABS","05 Mar","05 Mar","09 Mar",""],
+[44,"04 Mar","TN22EH2921","DZIRE","LOGESHWARAN","9940438777","R 6","05 Mar","05 Mar","10 Mar",""],
+[45,"04 Mar","TN65CZ7142","ERTIGA","AATHINARAYANA MOORTHI","9585615910","R 6","05 Mar","05 Mar","06 Mar",""],
+[46,"04 Mar","TN19BD5841","DZIRE","PERUMAL R","7092022710","A2 CABS","05 Mar","05 Mar","",""],
+[47,"04 Mar","TN20DL4934","ROMION","BALAJI S","9080348442","SUPREME","05 Mar","05 Mar","09 Mar",""],
+[48,"04 Mar","TN32BE7871","DZIRE","RAJA S","","S.J.CABS","05 Mar","05 Mar","09 Mar",""],
+[49,"04 Mar","TN03AR0144","ERTIGA","DURAI KANNU","9710242600","Agnipoo","","","",""],
+[50,"04 Mar","TN25CK7061","ERTIGA","BRITTO JOHNSON","7975832913","Royal Cabs","","","",""],
+[51,"04 Mar","TN11BF4298","DZIRE","","","","","","",""],
+[52,"04 Mar","TN82Q0280","ERTIGA","","","","","","",""],
+[53,"04 Mar","TN23DE4993","ERTIGA","","","","","","",""],
+[54,"04 Mar","TN47CX3963","DZIRE","MANIMARAN K","9003023231","STC","05 Mar","05 Mar","09 Mar",""],
+[55,"03 Mar","TN11BU1057","ERTIGA","ANBU MURUGAN P","8072272704","FIESTA","06 Mar","07 Mar","09 Mar",""],
+[56,"03 Mar","TN16AZ0768","DZIRE","SHAHUL HAMEED B","7401010562","FIESTA","06 Mar","07 Mar","09 Mar",""],
+[57,"03 Mar","TN09DK9708","XUV 400 EV","HAMEED G","9791124379","FIESTA","06 Mar","07 Mar","",""],
+[58,"03 Mar","TN09DK9743","XUV 400 EV","MOHAN H","8667447820","FIESTA","06 Mar","07 Mar","09 Mar",""],
+[59,"5 Mar","TN12BR6221","ERTIGA","SARAN RAJ","9952052787","SMT (CC)","07 Mar","","",""],
+[60,"5 Mar","TN31CK1868","ERTIGA","KARTHIK","7904953343","AGNI","07 Mar","08 Mar","09 Mar",""],
+[61,"5 Mar","TN97U9684","ERTIGA","SARAVANAN","8015035358","SRI SAI","07 Mar","","",""],
+[62,"5 Mar","TN14AL1190","DZIRE","AMBEDKAR RAJKUMAR","7010526192","AM TRAVELS","07 Mar","08 Mar","",""],
+[63,"5 Mar","TN15H5136","DZIRE","KUMARAGURU","9524062755","BABITHA","07 Mar","08 Mar","",""],
+[64,"5 Mar","TN16K5938","DZIRE","SATHISH","7639128659","SMT (CC)","07 Mar","08 Mar","",""],
+[65,"5 Mar","TN32BK0978","DZIRE","CELLAKUMAR","9384618116","BABITHA","07 Mar","08 Mar","09 Mar",""],
+[66,"5 Mar","TN23DW6835","DZIRE","THIYAGARAJAN","9787052276","AGNI","07 Mar","","",""],
+[67,"5 Mar","TN10BX0424","HYUNDAI AURA","SURESH","8637407745","BABITHA","07 Mar","08 Mar","10 Mar",""],
+[68,"6 Mar","TN12BH3822","DZIRE","DHANASEKAR","7904925266","SRI SAI","07 Mar","08 Mar","09 Mar",""],
+[69,"6 Mar","TN72CK1976","DZIRE","SENTHIL KUMAR","6385601058","LOHITH","07 Mar","","",""],
+[70,"6 Mar","TN19BE2922","DZIRE","RAKESH","9345652117","AGNI","07 Mar","08 Mar","",""],
+[71,"6 Mar","TN12BR8548","ERTIGA","AJITH RAJ","9551215153","SR TRAVELS","07 Mar","08 Mar","09 Mar",""],
+[72,"6 Mar","TN75BC1365","DZIRE","REJIN","7708751991","BABITHA","07 Mar","08 Mar","10 Mar",""],
+[73,"7 Mar","TN10BX1830","ERTIGA","VIGNESH","9944902726","Anand Kumar","08 Mar","08 Mar","",""],
+[74,"7 Mar","TN18BH6959","DZIRE","CHITHIRAI KUMAR","","Vignesh","","","",""],
+[75,"7 Mar","TN91AC7362","DZIRE","KALAIVENDHAN","8270061689","Agnipoo","10 Mar","10 Mar","11 Mar",""],
+[76,"7 Mar","TN07DL3981","ERTIGA","MAGESH","9361099826","SMT","08 Mar","08 Mar","",""],
+[77,"7 Mar","TN02CC7274","HYUNDAI AURA","SHANMUGABALAN J","","SMT","08 Mar","08 Mar","",""],
+[78,"7 Mar","TN11BL2952","ERTIGA","SUBRAMANIAN","","SRI SAI","08 Mar","08 Mar","",""],
+[79,"7 Mar","TN11BP1572","ERTIGA","MANI","","SMT","08 Mar","08 Mar","",""],
+[80,"7 Mar","TN11BQ6411","ERTIGA","RAJESH KUMAR","","Babitha","08 Mar","","",""],
+[81,"7 Mar","TN97AZ7760","DZIRE","SANTHOSH KUMAR","","","","","",""],
+[82,"7 Mar","TN63BU2586","ERTIGA","SASIKUMAR","","SMT","10 Mar","10 Mar","",""],
+[83,"7 Mar","TN15MK8602","ERTIGA","VISHNURAJ","","SMT","10 Mar","10 Mar","",""],
+[84,"7 Mar","TN14AS2532","ERTIGA","KAGVIDOSS","","","10 Mar","10 Mar","",""],
+[85,"7 Mar","TN05CZ2802","DZIRE","MOHAMMED YOUSUF","","Lohith","08 Mar","08 Mar","10 Mar",""],
+[86,"7 Mar","TN23DV0535","ERTIGA","ZAHOOR BASHA","","SMT","10 Mar","10 Mar","",""],
+[87,"7 Mar","TN05CT4716","ERTIGA","MURUGAN","","Babitha","08 Mar","08 Mar","",""],
+[88,"7 Mar","TN11BQ6412","ERTIGA","INFANT RAJ","","Babitha","10 Mar","10 Mar","",""],
+[89,"7 Mar","TN85X2188","ERTIGA","MANOHAVA","","SMT","10 Mar","10 Mar","",""],
+[90,"7 Mar","TN75BD9319","DZIRE","SASIN JR","","Babitha","08 Mar","08 Mar","11 Mar",""],
+[91,"9 Mar","TN19BA1509","DZIRE","RAMESH K","9025684365","SUPREME","11 Mar","","",""],
+[92,"9 Mar","TN09DL8431","DZIRE","JEEVANANDAM","8610282264","SJ CABS","11 Mar","","",""],
+[93,"9 Mar","TN11BJ4549","DZIRE","RAJESHKHANNA","9080127776","SJ CABS","11 Mar","","",""],
+[94,"9 Mar","TN81AX1805","ERTIGA","SENTHIPANDI","8148925927","Babitha","11 Mar","","",""],
+[95,"9 Mar","TN05CZ2484","DZIRE","ARVIND","7550052484","STC","11 Mar","","",""],
+[96,"9 Mar","TN12BE7313","DZIRE","DEVARAJ","9176904400","SJ CABS","","","",""],
+[97,"9 Mar","TN10CB5707","DZIRE","MUTHUKUMAR","8940399694","Babitha","11 Mar","","",""],
+[98,"9 Mar","TN11BP3883","DZIRE","VINOTH KUMAR","7639618484","RAKSHAN TRAVELS","11 Mar","","",""],
+[99,"9 Mar","TN12BM5256","DZIRE","MANI","9042062967","SMT","11 Mar","","",""],
+[100,"9 Mar","TN18BW9930","DZIRE","GNANASEKAR","9952187859","RAKSHAN TRAVELS","","","",""],
+[101,"9 Mar","TN19BC6502","DZIRE","MANIKANDAN","9176306892","RAKSHAN TRAVELS","","","",""],
+[102,"9 Mar","TN07DJ7378","DZIRE","ANANDRAJ","9080090019","Babitha","","","",""],
+[103,"10 Mar","TN12BR8075","DZIRE","LOGESH","8778569513","","","","",""],
+[104,"10 Mar","TN63BT8469","ERTIGA","PACKIYARAJ","7550260917","","","","",""],
+[105,"10 Mar","TN15F7989","DZIRE","SURESH","8220968625","","","","",""],
 ];
-
-// ─── ALWAYS USE THESE FIXED KPI VALUES (from your sheet header) ────────
-// Profile Creation: Pendency=23, Completed=81
-// Pending Approval from Citi: Pendency=7, Completed=74
-// Pending for Deployment: Pendency=29, Completed=45
-let KPI = { tot:104, pcp:23, pcc:81, cip:7, cic:74, dep:29, dec:45 };
 
 const CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vRazlLTQtQ9B2kiaX88DzaTEOG_lg-knu0LjAYrZqOYEeiTBvQg-0z64U70Z5AoJQ/pub?output=csv';
 const PROXIES=[
@@ -363,14 +351,15 @@ let data=[], filt='all', srch='', sCol=-1, sDir=1;
 function mk(r){
   return {
     sno:String(r[0]||''), date:String(r[1]||''), reg:String(r[2]||''),
-    model:String(r[3]||'').toUpperCase(), driver:String(r[4]||''),
-    mobile:String(r[5]||''), vendor:String(r[6]||''),
-    email:String(r[7]||''), admin:String(r[8]||''),
-    deploy:String(r[9]||''), rem:String(r[10]||'')
+    model:String(r[3]||'').toUpperCase().trim(),
+    driver:String(r[4]||''), mobile:String(r[5]||''),
+    vendor:String(r[6]||''), email:String(r[7]||''),
+    admin:String(r[8]||''), deploy:String(r[9]||''),
+    rem:String(r[10]||'')
   };
 }
 
-function status(r){
+function getS(r){
   const rm=(r.rem||'').toLowerCase();
   if(rm.includes('suspend')||rm.includes('not update')||rm.includes('not respond')||rm.includes('license')) return 'issue';
   if(r.deploy) return 'deployed';
@@ -379,44 +368,31 @@ function status(r){
   return 'pend-pro';
 }
 
-function badgeHtml(s,dep){
+function bHtml(s,dep){
   return ({
-    deployed: `<span class="bdg b-d">✓ ${dep||'Deployed'}</span>`,
-    issue:    `<span class="bdg b-i">⚠ Issue</span>`,
+    deployed:  `<span class="bdg b-d">✓ ${dep||'Deployed'}</span>`,
+    issue:     `<span class="bdg b-i">⚠ Issue</span>`,
     'pend-dep':`<span class="bdg b-pd">⏳ Pending Deploy</span>`,
     'pend-cit':`<span class="bdg b-pc">⏳ Awaiting Citi</span>`,
     'pend-pro':`<span class="bdg b-pp">○ Profile Pending</span>`,
   })[s]||'';
 }
 
-// Highlight matching text
-function hl(val, q){
+function hl(val,q){
   const s=String(val||'');
-  if(!q||!s) return s||'—';
+  if(!q) return s||'—';
   const re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
-  return s.replace(re, m=>`<mark>${m}</mark>`) || '—';
+  return s.replace(re,m=>`<mark>${m}</mark>`)||'—';
 }
 
-function pct(a,b){return b?Math.round(a/b*100)+'%':'0%';}
 function $i(id){return document.getElementById(id);}
 
-// ─── RENDER KPI (always use KPI object, never compute from records) ───
-function renderKPI(){
-  const n=KPI.tot;
-  $i('k-tot').textContent=n;
-  $i('k-pcp').textContent=KPI.pcp; $i('k-pcc').textContent=KPI.pcc;
-  $i('b-pc').style.width=pct(KPI.pcc,n);
-  $i('k-cip').textContent=KPI.cip; $i('k-cic').textContent=KPI.cic;
-  $i('b-ci').style.width=pct(KPI.cic,n);
-  $i('k-dep').textContent=KPI.dep; $i('k-dec').textContent=KPI.dec;
-  $i('b-de').style.width=pct(KPI.dec,n);
-  // Issues computed from actual records
-  const iss=data.filter(r=>status(r)==='issue').length;
+function renderIssues(){
+  const iss=data.filter(r=>getS(r)==='issue').length;
   $i('k-iss').textContent=iss;
-  $i('k-ok').textContent=n-iss;
+  $i('k-ok').textContent=data.length-iss;
 }
 
-// ─── RENDER CHARTS ────────────────────────────────────────────────────
 function renderCharts(){
   // Vendor
   const v={};
@@ -427,7 +403,7 @@ function renderCharts(){
     `<div class="vb"><div class="vblbl" title="${n}">${n}</div><div class="vbtr"><div class="vbfi" style="width:${(c/mx)*100}%"></div></div><div class="vbn">${c}</div></div>`
   ).join('');
 
-  // Donut by model
+  // Donut
   const m={};
   data.forEach(r=>{const k=r.model||'Unknown';m[k]=(m[k]||0)+1;});
   const me=Object.entries(m).sort((a,b)=>b[1]-a[1]);
@@ -453,7 +429,7 @@ function renderCharts(){
   const sc={Deployed:0,'Pend.Deploy':0,'Await Citi':0,'Profile':0,Issues:0};
   const scl={Deployed:'#1a7a4a','Pend.Deploy':'#9d174d','Await Citi':'#1d4ed8','Profile':'#b45309',Issues:'#b91c1c'};
   data.forEach(r=>{
-    const s=status(r);
+    const s=getS(r);
     if(s==='deployed') sc.Deployed++;
     else if(s==='pend-dep') sc['Pend.Deploy']++;
     else if(s==='pend-cit') sc['Await Citi']++;
@@ -472,32 +448,26 @@ function renderCharts(){
   $i('schart').innerHTML=sh;
 }
 
-// ─── RENDER TABLE ─────────────────────────────────────────────────────
 function renderTable(){
-  // Count for filter buttons
-  const all=data.length;
-  const ndep=data.filter(r=>status(r)==='deployed').length;
-  const npend=data.filter(r=>status(r).startsWith('pend')).length;
-  const niss=data.filter(r=>status(r)==='issue').length;
-  $i('fc-all').textContent=`(${all})`;
-  $i('fc-dep').textContent=`(${ndep})`;
-  $i('fc-pend').textContent=`(${npend})`;
-  $i('fc-iss').textContent=`(${niss})`;
+  const nd=data.filter(r=>getS(r)==='deployed').length;
+  const np=data.filter(r=>getS(r).startsWith('pend')).length;
+  const ni=data.filter(r=>getS(r)==='issue').length;
+  $i('fc-all').textContent=`(${data.length})`;
+  $i('fc-dep').textContent=`(${nd})`;
+  $i('fc-pend').textContent=`(${np})`;
+  $i('fc-iss').textContent=`(${ni})`;
 
-  // Filter
   let rows=data.filter(r=>{
-    const s=status(r);
+    const s=getS(r);
     if(filt==='deployed'&&s!=='deployed') return false;
     if(filt==='pending'&&!s.startsWith('pend')) return false;
     if(filt==='issue'&&s!=='issue') return false;
     if(!srch) return true;
-    // Search ALL 11 fields with partial match
     const t=srch.toLowerCase();
     return [r.sno,r.date,r.reg,r.model,r.driver,r.mobile,r.vendor,r.email,r.admin,r.deploy,r.rem]
       .some(v=>String(v).toLowerCase().includes(t));
   });
 
-  // Sort
   const cols=['sno','date','reg','model','driver','mobile','vendor','email','admin','deploy','rem'];
   if(sCol>=0){
     rows.sort((a,b)=>{
@@ -508,15 +478,13 @@ function renderTable(){
   }
 
   $i('tcnt').textContent=`Showing ${rows.length} of ${data.length} records`;
-
   if(!rows.length){
     $i('tbody').innerHTML=`<tr><td colspan="12" class="empty">No records match "${srch||'your filter'}"</td></tr>`;
     return;
   }
-
   const q=srch;
   $i('tbody').innerHTML=rows.map(r=>{
-    const s=status(r),mc=MC[r.model]||'#64748b';
+    const s=getS(r),mc=MC[r.model]||'#64748b';
     return `<tr>
       <td class="sno">${hl(r.sno,q)}</td>
       <td class="mn">${hl(r.date,q)||'—'}</td>
@@ -528,7 +496,7 @@ function renderTable(){
       <td class="mn">${hl(r.email,q)||'—'}</td>
       <td class="mn">${hl(r.admin,q)||'—'}</td>
       <td class="mn">${hl(r.deploy,q)||'—'}</td>
-      <td>${badgeHtml(s,r.deploy)}</td>
+      <td>${bHtml(s,r.deploy)}</td>
       <td class="rem">${hl(r.rem,q)||''}</td>
     </tr>`;
   }).join('');
@@ -537,33 +505,26 @@ function renderTable(){
 function sf(f,btn){filt=f;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderTable();}
 function st(v){srch=v;renderTable();}
 function doSort(col){
-  // Clear old icon
   for(let i=0;i<=10;i++){const el=$i('si'+i);if(el)el.textContent='↕';}
   if(sCol===col) sDir*=-1; else{sCol=col;sDir=1;}
-  const el=$i('si'+col);
-  if(el) el.textContent=sDir===1?'↑':'↓';
+  const el=$i('si'+col);if(el)el.textContent=sDir===1?'↑':'↓';
   renderTable();
 }
 
-// ─── TRY LIVE ─────────────────────────────────────────────────────────
+// ─── TRY LIVE — only fetches vehicle rows, NEVER changes KPI cards ────
 async function tryLive(){
   $i('lf').className='lf run';
   $i('hbdg').textContent='⟳ FETCHING';$i('hbdg').className='hbdg loading';
   $i('stext').textContent='Connecting to Google Sheets...';
 
   let got=false;
-  for(const mk2 of PROXIES){
+  for(const mkP of PROXIES){
     try{
-      const res=await fetch(mk2(CSV),{signal:AbortSignal.timeout(8000)});
+      const res=await fetch(mkP(CSV),{signal:AbortSignal.timeout(8000)});
       const txt=await res.text();
       if(txt&&txt.length>200&&!txt.trim().startsWith('<')){
         const rows=parseCSV(txt);
-        if(rows.length>0){
-          data=rows;
-          // Parse KPI from the sheet's own header rows
-          parseKPI(txt);
-          got=true;break;
-        }
+        if(rows.length>0){data=rows;got=true;break;}
       }
     }catch(e){}
   }
@@ -576,55 +537,28 @@ async function tryLive(){
     $i('stext').textContent=`✓ Live from Google Sheets · ${data.length} records · Updated ${new Date().toLocaleTimeString()}`;
   }else{
     data=RAW.map(mk);
-    KPI={tot:104,pcp:23,pcc:81,cip:7,cic:74,dep:29,dec:45};
     $i('hbdg').textContent='● CACHED';$i('hbdg').className='hbdg cached';
     $i('sdot').className='sdot';
-    $i('stext').innerHTML='⚠ Could not reach Google Sheet. Showing embedded data. Ensure sheet is <strong>published as CSV</strong>.';
+    $i('stext').innerHTML='⚠ Could not reach sheet. Showing embedded data.';
   }
-  renderKPI();renderCharts();renderTable();
-}
-
-// Parse KPI from the sheet header — rows 1&2 have Pendency/Completed
-function parseKPI(txt){
-  const lines=txt.split('\n').slice(0,6);
-  lines.forEach(line=>{
-    const c=spl(line);
-    const joined=c.join('').toLowerCase();
-    // Rows have values in columns index 6,7,8 (Profile, Citi, Deploy)
-    if(joined.includes('pendency')||joined.includes('pending')){
-      const vals=[c[6],c[7],c[8]].map(v=>parseInt((v||'').replace(/[^0-9]/g,'')));
-      if(!isNaN(vals[0])&&vals[0]>0) KPI.pcp=vals[0];
-      if(!isNaN(vals[1])&&vals[1]>0) KPI.cip=vals[1];
-      if(!isNaN(vals[2])&&vals[2]>0) KPI.dep=vals[2];
-    }
-    if(joined.includes('completed')){
-      const vals=[c[6],c[7],c[8]].map(v=>parseInt((v||'').replace(/[^0-9]/g,'')));
-      if(!isNaN(vals[0])&&vals[0]>0) KPI.pcc=vals[0];
-      if(!isNaN(vals[1])&&vals[1]>0) KPI.cic=vals[1];
-      if(!isNaN(vals[2])&&vals[2]>0) KPI.dec=vals[2];
-    }
-    // Total vehicles
-    if(joined.includes('inspection completed')){
-      const n=parseInt((c[2]||c[3]||'').replace(/[^0-9]/g,''));
-      if(!isNaN(n)&&n>0) KPI.tot=n;
-    }
-  });
+  renderIssues();
+  renderCharts();
+  renderTable();
 }
 
 function parseCSV(txt){
   const lines=txt.split('\n').map(l=>l.trim()).filter(Boolean);
-  // Find header row (has S.No / Regn_No)
   let hi=0;
   for(let i=0;i<Math.min(12,lines.length);i++){
-    if(/S\.?No|Regn_No|Regn No/i.test(lines[i])){hi=i;break;}
+    if(/S\.?\s*No|Regn_No|Regn No/i.test(lines[i])){hi=i;break;}
   }
   const rows=[];
   for(let i=hi+1;i<lines.length;i++){
     const c=spl(lines[i]);
-    if(!c[2]||c[2].trim().length<4) continue;
-    rows.push(mk([c[0]?.trim()||'',c[1]?.trim()||'',c[2]?.trim()||'',c[3]?.trim()||'',
-      c[4]?.trim()||'',c[5]?.trim()||'',c[6]?.trim()||'',c[7]?.trim()||'',
-      c[8]?.trim()||'',c[9]?.trim()||'',c[10]?.trim()||'']));
+    const reg=(c[2]||'').trim();
+    if(!reg||reg.length<4||isNaN(Number(c[0]))) continue;
+    rows.push(mk([c[0]?.trim(),c[1]?.trim(),reg,c[3]?.trim(),c[4]?.trim(),
+      c[5]?.trim(),c[6]?.trim(),c[7]?.trim(),c[8]?.trim(),c[9]?.trim(),c[10]?.trim()||'']));
   }
   return rows;
 }
@@ -632,10 +566,9 @@ function spl(line){const r=[];let c='',q=false;for(const ch of line){if(ch==='"'
 
 // ─── INIT ─────────────────────────────────────────────────────────────
 data=RAW.map(mk);
-renderKPI();
+renderIssues();
 renderCharts();
 renderTable();
-// Try live in background
 setTimeout(tryLive,600);
 setInterval(tryLive,120000);
 </script>
