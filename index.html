@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Induction Status — Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f0ede8;--surface:#fff;--surface2:#f8f6f2;--border:#e2ddd6;
+  --ink:#1a1714;--muted:#8a8279;--green:#1a7a4a;--green-bg:#e6f4ec;
+  --amber:#b45309;--amber-bg:#fef3c7;--red:#b91c1c;--red-bg:#fee2e2;
+  --blue:#1d4ed8;--blue-bg:#dbeafe;--accent:#e63946;
+}
+body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-height:100vh}
+.header{background:var(--ink);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.header-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.12em;color:#fff}
+.header-right{display:flex;align-items:center;gap:16px}
+.live-badge{color:#fff;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 10px;border-radius:2px;letter-spacing:.08em;background:#b45309}
+.live-badge.live{background:#1a7a4a}
+.live-badge.error{background:#b91c1c}
+.header-meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#aaa}
+.refresh-btn{background:transparent;border:1px solid #444;color:#aaa;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer}
+.refresh-btn:hover{border-color:#fff;color:#fff}
+.load-bar{height:3px;background:var(--border);overflow:hidden}
+.load-bar-inner{height:100%;width:0%;background:var(--accent);transition:width .3s}
+.load-bar-inner.anim{animation:lb 1.2s ease infinite}
+@keyframes lb{0%{width:0;margin-left:0}50%{width:60%;margin-left:20%}100%{width:0;margin-left:100%}}
+
+.body{padding:24px 32px}
+.src-bar{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:8px 14px;margin-bottom:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.src-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#1a7a4a}
+.src-dot.warn{background:#b45309}
+
+.summary-bar{display:grid;grid-template-columns:auto 1fr 1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+.summary-big{background:var(--ink);color:#fff;border-radius:6px;padding:20px 28px;display:flex;flex-direction:column;justify-content:center;min-width:160px}
+.summary-big-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.summary-big-val{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;color:#fff}
+.summary-big-sub{font-size:11px;color:#888;margin-top:4px;font-family:'IBM Plex Mono',monospace}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.stat-label{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.stat-row{display:flex;align-items:baseline;gap:12px}
+.n-pend{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--amber)}
+.n-comp{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--green)}
+.n-issue{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--red)}
+.stat-sub{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.prog{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px}
+.prog-fill{height:100%;border-radius:3px;transition:width .8s ease}
+
+.charts-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:18px}
+.chart-title{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:14px}
+.vbar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.vbar-label{font-size:11px;color:var(--ink);width:90px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vbar-track{flex:1;height:12px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.vbar-fill{height:100%;border-radius:2px;background:var(--ink)}
+.vbar-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);width:24px;text-align:right}
+.donut-wrap{display:flex;align-items:center;gap:20px}
+.d-leg-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.d-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.d-name{font-size:11px;color:var(--ink);flex:1}
+.d-val{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
+
+.filters{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.flabel{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.fbtn{padding:5px 14px;border-radius:3px;border:1px solid var(--border);background:var(--surface);font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;color:var(--ink)}
+.fbtn:hover{border-color:var(--ink)}
+.fbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.search-box{margin-left:auto;padding:6px 12px;border:1px solid var(--border);border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--surface);color:var(--ink);width:220px;outline:none}
+.search-box:focus{border-color:var(--ink)}
+
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.tbl-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.tbl-hdr-title{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.tbl-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--surface2);padding:9px 12px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;position:sticky;top:64px}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+tbody tr:hover{background:var(--surface2)}
+tbody td{padding:9px 12px;font-size:12px;white-space:nowrap}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:11px}
+.regn{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:.04em}
+.mtag{display:inline-block;border:1px solid;border-radius:2px;padding:1px 6px;font-size:10px;font-family:'IBM Plex Mono',monospace}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;white-space:nowrap}
+.bd{background:var(--green-bg);color:var(--green)}
+.bp{background:var(--amber-bg);color:var(--amber)}
+.bc{background:var(--blue-bg);color:var(--blue)}
+.bpd{background:#fce7f3;color:#9d174d}
+.bi{background:var(--red-bg);color:var(--red)}
+.sno{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11px}
+.rem{font-size:11px;color:var(--red);font-style:italic;max-width:180px;white-space:normal}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-title">Vehicle Induction Status</div>
+  <div class="header-right">
+    <div class="live-badge" id="badge">⟳ LOADING</div>
+    <div class="header-meta" id="meta">Connecting...</div>
+    <button class="refresh-btn" onclick="loadData()">↺ Refresh</button>
+  </div>
+</div>
+<div class="load-bar"><div class="load-bar-inner anim" id="lbar"></div></div>
+
+<div class="body">
+  <div class="src-bar" id="src-bar">
+    <div class="src-dot" id="src-dot"></div>
+    <span id="src-label">Loading...</span>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-big">
+      <div class="summary-big-label">Inspection Completed</div>
+      <div class="summary-big-val" id="s-total">—</div>
+      <div class="summary-big-sub">Total vehicles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Profile Creation</div>
+      <div class="stat-row"><div class="n-pend" id="s-pcp">—</div><div class="stat-sub">pending</div></div>
+      <div class="stat-row"><div class="n-comp" id="s-pcc">—</div><div class="stat-sub">done</div></div>
+      <div class="prog"><div class="prog-fill" id="b-pc" style="background:var(--green)"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pending Approval – Citi</div>
+      <div class="stat-row"><div class="n-pend" id="s-cip">—</div><div class="stat-sub">pending</div></div>
+      <div class="stat-row"><div class="n-comp" id="s-cic">—</div><div class="stat-sub">approved</div></div>
+      <div class="prog"><div class="prog-fill" id="b-ci" style="background:var(--green)"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pending Deployment</div>
+      <div class="stat-row"><div class="n-pend" id="s-dep">—</div><div class="stat-sub">pending</div></div>
+      <div class="stat-row"><div class="n-comp" id="s-dec">—</div><div class="stat-sub">deployed</div></div>
+      <div class="prog"><div class="prog-fill" id="b-de" style="background:var(--amber)"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Issues / Flags</div>
+      <div class="stat-row"><div class="n-issue" id="s-iss">—</div></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Not responding · Suspended · Portal</div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card"><div class="chart-title">Vehicles by Vendor</div><div id="vchart"></div></div>
+    <div class="chart-card">
+      <div class="chart-title">Vehicles by Model</div>
+      <div class="donut-wrap">
+        <svg id="dsvg" width="110" height="110" viewBox="0 0 110 110"></svg>
+        <div id="dleg"></div>
+      </div>
+    </div>
+    <div class="chart-card"><div class="chart-title">Status Breakdown</div><svg id="schart" viewBox="0 0 260 130" width="100%"></svg></div>
+  </div>
+
+  <div class="filters">
+    <span class="flabel">Status:</span>
+    <button class="fbtn active" onclick="sf('all',this)">All</button>
+    <button class="fbtn" onclick="sf('deployed',this)">Deployed</button>
+    <button class="fbtn" onclick="sf('pending',this)">Pending</button>
+    <button class="fbtn" onclick="sf('issue',this)">Issues</button>
+    <input class="search-box" type="text" placeholder="Search reg no, driver, vendor..." oninput="st(this.value)">
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr">
+      <span class="tbl-hdr-title">Vehicle Records</span>
+      <span class="tbl-count" id="tcount">—</span>
+    </div>
+    <div style="overflow-x:auto;max-height:580px;overflow-y:auto">
+      <table>
+        <thead><tr>
+          <th>S.No</th><th>Date</th><th>Reg No</th><th>Model</th>
+          <th>Driver</th><th>Mobile</th><th>Vendor</th>
+          <th>Email Sent</th><th>Admin Approval</th><th>Deployment</th>
+          <th>Status</th><th>Remarks</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEET_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vS4iaCwRiltibMvl50o70DdMGb5ros9wo3pNpE6JcWl2qEMfc19GxkoJhiZDPoCfdpww2WvU8-obytX/pub?output=csv';
+const PROXIES=[
+  u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  u=>`https://corsproxy.io/?${encodeURIComponent(u)}`,
+  u=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+  u=>`https://thingproxy.freeboard.io/fetch/${encodeURIComponent(u)}`,
+];
+
+const FB=[[1,"21 Feb","TN61Z4748","DZIRE","RAJA SELVAM","8524078364","JOYS","28 Feb","28-Feb","","05 March"],[2,"21 Feb","TN61Z4030","DZIRE","MARUTHUPANDIYAN","9751105482","JOYS","28 Feb","28 Feb","","Not responding"],[3,"23 Feb","TN12BJ5908","DZIRE","SYED SULTHAN","7603935299","A2 CABS","26 Feb","26 Feb","03 Mar",""],[4,"23 Feb","TN12BK0024","DZIRE","VINOTH","9940042040","A2 CABS","28 Feb","28-Feb","03 Mar",""],[5,"23 Feb","TN77V6244","DZIRE","SUDHAKAR","7358999609","SR TRAVELS","28 Feb","28 Feb","","Not Responding"],[6,"23 Feb","TN73AP7087","HYUNDAI AURA","PURUSHOTHAMAN","9629016004","JOYS","28 Feb","28 Feb","02 Mar",""],[7,"23 Feb","TN76BC8402","DZIRE","JOHNSON","6380738505","SR TRAVELS","28 Feb","28 Feb","03 Mar",""],[8,"23 Feb","TN85W7756","DZIRE","MADHAN RAJ","9566266899","R 6","28 Feb","28 Feb","02 Mar",""],[9,"24 Feb","TN24BJ4810","ERTIGA","DEIVARASU SIVALINGAM","7418883193","SR TRAVELS","28 Feb","28 Feb","03 Mar",""],[10,"25 Feb","TN82P9301","DZIRE","VEMBARASAN","8098531314","R 6","28 Feb","28 Feb","03 Mar",""],[11,"25 Feb","TN14AR8298","DZIRE","VASANTHA KUMAR","9094474218","JOYS","03 Mar","03-Mar","","09 March"],[12,"27 Feb","TN07DJ6321","DZIRE","SANKAR KALIRAJ","9962770569","LOHITH CABS","01 Mar","01-Mar","02 Mar",""],[13,"27 Feb","TN03AQ4401","DZIRE","SUSHILKUMAR","8072263708","R 6","01 Mar","01-Mar","06 Mar","Not responding"],[14,"27 Feb","TN22EE0704","DZIRE","ARUN","9884139042","SR TRAVELS","01 Mar","01-Mar","",""],[15,"28 Feb","TN85U5510","DZIRE","SHOBAN BABU","98841J80790","AKC","01 Mar","01-Mar","03 Mar",""],[16,"28 Feb","TN11BM8749","DZIRE","RAJI","8778138316","AKC","01 Mar","01-Mar","03 Mar",""],[17,"28 Feb","TN22EB6870","DZIRE","LINGESH KUMAR","9941220885","AKC","01 Mar","01-Mar","05 Mar",""],[18,"28 Feb","TN12BR9511","ERTIGA","KANNAN","9790718158","R 6","01 Mar","01 Mar","02-Mar",""],[19,"28 Feb","TN10BZ9830","HYUNDAI AURA","STEPHEN RAJ","8939180669","AKC","02 Mar","02 Mar","03 Mar",""],[20,"28 Feb","TN25CK0882","KIA CARENS","PRASANTH","9080129652","SR TRAVELS","02 Mar","02 Mar","03 Mar",""],[21,"28 Feb","TN07DM9886","DZIRE","SILAMBARASAN","9840860622","AKC","03 Mar","03 Mar","03 Mar",""],[22,"28 Feb","TN09DL1716","ERTIGA","SENTHIL KUMAR C","8531839416","FIESTA","05 Mar","05 Mar","","09 March"],[23,"28 Feb","TN09DE3393","TIGOREV","RAJA S","8524078364","FIESTA","05 Mar","05 Mar","","Not responding"],[24,"28 Feb","TN96F9936","DZIRE","SANKARANARAYANAN R","8248401214","FIESTA","05 Mar","05 Mar","03 Mar",""],[25,"28 Feb","TN97F3163","DZIRE","THAMOTHIRAN J","6369545677","FIESTA","05 Mar","05 Mar","04 Mar",""],[26,"02 Mar","TN14AQ2837","HYUNDAI AURA","SATHI RAMASAMY","6382491480","A2 CABS","04 Mar","04 Mar","",""],[27,"02 Mar","TN01BV7027","DZIRE","ANAND","9789956679","R 6","04 Mar","04 Mar","05 Mar",""],[28,"02 Mar","TN07DK2587","DZIRE","BABU","7305611623","R 6","04 Mar","04 Mar","10 Mar",""],[29,"02 Mar","TN63CV5330","ERTIGA","SENTHIL KUMAR","8825887336","KUKU TRAVELS","09 Mar","10 Mar","11 Mar","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],[30,"02 Mar","TN25CM9087","DZIRE","RAJESH","9600672167","ANAND KUMAR","","","","DRIVER LICENSE SUSPENDED"],[31,"03 Mar","TN11BL4521","DZIRE","VICTOR NITHYANANDAM","8807506239","GANESH","04 Mar","05 Mar","06 Mar",""],[32,"03 Mar","TN25CH4223","DZIRE","VASANTH","7550203105","KUKU TRAVELS","04 Mar","05 Mar","10 Mar",""],[33,"03 Mar","TN51AV5541","DZIRE","KABILAN","7845451664","SUPREME","04 Mar","05 Mar","06 Mar",""],[34,"03 Mar","TN11BP2898","RUMION","JOHN ALBERT","9566150684","R 6","04 Mar","10 Mar","",""],[35,"03 Mar","TN11BS2724","DZIRE","RAJESH","7904046553","A2 CABS","04 Mar","05 Mar","06 Mar",""],[36,"03 Mar","TN18CB6694","DZIRE","RAJESH","8124045140","JOYS","04 Mar","","",""],[37,"03 Mar","TN12BB5097","DZIRE","PRABHAKARAN","9994229488","SVT","05 Mar","","","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],[38,"03 Mar","TN11BS0198","ERTIGA","MURUGAN","8056132330","KUKU TRAVELS","09 Mar","10 Mar","11 Mar","NOT UPDATE IN PORTAL OTHER VENDOR VEHICLE"],[39,"04 Mar","TN32BH0535","DZIRE","PRAVEEN KUMAR","9047670589","S.J. CABS","05 Mar","05 Mar","09 Mar",""],[40,"04 Mar","TN07DH1031","DZIRE","RAVIKUMAR","9884202332","S.J. CABS","05 Mar","05 Mar","",""],[41,"04 Mar","TN18BU0274","DZIRE","SURESH","7010056037","SUPREME","05 Mar","05 Mar","",""],[42,"04 Mar","TN32BF3422","DZIRE","VENKATESH PERUMAL","8489804601","S.J. CABS","05 Mar","05 Mar","09 Mar",""],[43,"04 Mar","TN22EH2921","DZIRE","LOGESHWARAN","9940438777","R 6","05 Mar","05 Mar","10 Mar",""],[44,"04 Mar","TN65CZ7142","ERTIGA","AATHINARAYANA MOORTHI","9585615910","R 6","05 Mar","05 Mar","06 Mar",""],[45,"04 Mar","TN19BD5841","DZIRE","PERUMAL R","7092022710","A2 CABS","05 Mar","05 Mar","",""],[46,"04 Mar","TN20DL4934","ROMION","BALAJI S","9080348442","SUPREME","05 Mar","05 Mar","09 Mar",""],[47,"04 Mar","TN32BE7871","DZIRE","RAJA S","","S.J.CABS","05 Mar","05 Mar","09 Mar",""],[48,"04 Mar","TN03AR0144","ERTIGA","DURAI KANNU","9710242600","AGNIPOO","","","",""],[49,"04 Mar","TN25CK7061","ERTIGA","BRITTO JOHNSON","7975832913","ROYAL CABS","","","",""],[50,"04 Mar","TN11BF4298","DZIRE","","","","","","",""],[51,"04 Mar","TN82Q0280","ERTIGA","","","","","","",""],[52,"04 Mar","TN23DE4993","ERTIGA","","","","","","",""],[53,"04 Mar","TN47CX3963","DZIRE","MANIMARAN K","9003023231","STC","05 Mar","05 Mar","09 Mar",""],[54,"03 Mar","TN11BU1057","ERTIGA","ANBU MURUGAN P","8072272704","FIESTA","06 Mar","07 Mar","09 Mar",""],[55,"03 Mar","TN16AZ0768","DZIRE","SHAHUL HAMEED B","7401010562","FIESTA","06 Mar","07 Mar","09 Mar",""],[56,"03 Mar","TN09DK9708","XUV 400 EV","HAMEED G","9791124379","FIESTA","06 Mar","07 Mar","",""],[57,"03 Mar","TN09DK9743","XUV 400 EV","MOHAN H","8667447820","FIESTA","06 Mar","07 Mar","09 Mar",""],[58,"5 Mar","TN12BR6221","ERTIGA","SARAN RAJ","9952052787","SMT (CC)","07 Mar","","",""],[59,"5 Mar","TN31CK1868","ERTIGA","KARTHIK","7904953343","AGNI","07 Mar","08 Mar","09 Mar",""],[60,"5 Mar","TN97U9684","ERTIGA","SARAVANAN","8015035358","SRI SAI","07 Mar","","",""],[61,"5 Mar","TN14AL1190","DZIRE","AMBEDKAR RAJKUMAR","7010526192","AM TRAVELS","07 Mar","08 Mar","",""],[62,"5 Mar","TN15H5136","DZIRE","KUMARAGURU","9524062755","BABITHA","07 Mar","08 Mar","",""],[63,"5 Mar","TN16K5938","DZIRE","SATHISH","7639128659","SMT (CC)","07 Mar","08 Mar","",""],[64,"5 Mar","TN32BK0978","DZIRE","CELLAKUMAR","9384618116","BABITHA","07 Mar","08 Mar","09 Mar",""],[65,"5 Mar","TN23DW6835","DZIRE","THIYAGARAJAN","9787052276","AGNI","07 Mar","","",""],[66,"5 Mar","TN10BX0424","HYUNDAI AURA","SURESH","8637407745","BABITHA","07 Mar","08 Mar","10 Mar",""],[67,"6 Mar","TN12BH3822","DZIRE","DHANASEKAR","7904925266","SRI SAI","07 Mar","08 Mar","09 Mar",""],[68,"6 Mar","TN72CK1976","DZIRE","SENTHIL KUMAR","6385601058","LOHITH","07 Mar","","",""],[69,"6 Mar","TN19BE2922","DZIRE","RAKESH","9345652117","AGNI","07 Mar","08 Mar","",""],[70,"6 Mar","TN12BR8548","ERTIGA","AJITH RAJ","9551215153","SR TRAVELS","07 Mar","08 Mar","09 Mar",""],[71,"6 Mar","TN75BC1365","DZIRE","REJIN","7708751991","BABITHA","07 Mar","08 Mar","10 Mar",""],[72,"7 Mar","TN10BX1830","ERTIGA","VIGNESH","9944902726","ANAND KUMAR","08 Mar","08 Mar","",""],[73,"7 Mar","TN18BH6959","DZIRE","CHITHIRAI KUMAR","","VIGNESH","","","",""],[74,"7 Mar","TN91AC7362","DZIRE","KALAIVENDHAN","8270061689","AGNIPOO","10 Mar","10 Mar","11 Mar",""],[75,"7 Mar","TN07DL3981","ERTIGA","MAGESH","9361099826","SMT","08 Mar","08 Mar","",""],[76,"7 Mar","TN02CC7274","HYUNDAI AURA","SHANMUGABALAN J","","SMT","08 Mar","08 Mar","",""],[77,"7 Mar","TN11BL2952","ERTIGA","SUBRAMANIAN","","SRI SAI","08 Mar","08 Mar","",""],[78,"7 Mar","TN11BP1572","ERTIGA","MANI","","SMT","08 Mar","08 Mar","",""],[79,"7 Mar","TN11BQ6411","ERTIGA","RAJESH KUMAR","","BABITHA","08 Mar","","",""],[80,"7 Mar","TN97AZ7760","DZIRE","SANTHOSH KUMAR","","","","","",""],[81,"7 Mar","TN63BU2586","ERTIGA","SASIKUMAR","","SMT","10 Mar","10 Mar","",""],[82,"7 Mar","TN15MK8602","ERTIGA","VISHNURAJ","","SMT","10 Mar","10 Mar","",""],[83,"7 Mar","TN14AS2532","ERTIGA","KAGVIDOSS","","","10 Mar","10 Mar","",""],[84,"7 Mar","TN05CZ2802","DZIRE","MOHAMMED YOUSUF","","LOHITH","08 Mar","08 Mar","10 Mar",""],[85,"7 Mar","TN23DV0535","ERTIGA","ZAHOOR BASHA","","SMT","10 Mar","10 Mar","",""],[86,"7 Mar","TN05CT4716","ERTIGA","MURUGAN","","BABITHA","08 Mar","08 Mar","",""],[87,"7 Mar","TN11BQ6412","ERTIGA","INFANT RAJ","","BABITHA","10 Mar","10 Mar","",""],[88,"7 Mar","TN85X2188","ERTIGA","MANOHAVA","","SMT","10 Mar","10 Mar","",""],[89,"7 Mar","TN75BD9319","DZIRE","SASIN JR","","BABITHA","08 Mar","08 Mar","11 Mar",""],[90,"9 Mar","TN19BA1509","DZIRE","RAMESH K","9025684365","SUPREME","","","",""],[91,"9 Mar","TN09DL8431","DZIRE","JEEVANANDAM","8610282264","SJ CABS","","","",""],[92,"9 Mar","TN11BJ4549","DZIRE","RAJESHKHANNA","9080127776","SJ CABS","","","",""],[93,"9 Mar","TN81AX1805","ERTIGA","SENTHIPANDI","8148925927","BABITHA","","","",""],[94,"9 Mar","TN05CZ2484","DZIRE","ARVIND","7550052484","STC","","","",""],[95,"9 Mar","TN12BE7313","DZIRE","DEVARAJ","9176904400","SJ CABS","","","",""],[96,"9 Mar","TN10CB5707","DZIRE","MUTHUKUMAR","8940399694","BABITHA","","","",""],[97,"9 Mar","TN11BP3883","DZIRE","VINOTH KUMAR","7639618484","RAKSHAN TRAVELS","","","",""],[98,"9 Mar","TN12BM5256","DZIRE","MANI","9042062967","SMT","","","",""],[99,"9 Mar","TN18BW9930","DZIRE","GNANASEKAR","9952187859","RAKSHAN TRAVELS","","","",""],[100,"9 Mar","TN19BC6502","DZIRE","MANIKANDAN","9176306892","RAKSHAN TRAVELS","","","",""],[101,"9 Mar","TN07DJ7378","DZIRE","ANANDRAJ","9080090019","BABITHA","","","",""],[102,"10 Mar","TN12BR8075","DZIRE","LOGESH","8778569513","","","","",""],[103,"10 Mar","TN63BT8469","ERTIGA","PACKIYARAJ","7550260917","","","","",""],[104,"10 Mar","TN15F7989","DZIRE","SURESH","8220968625","","","","",""]];
+
+let data=[],filt='all',srch='';
+
+function toRow(r){return{sno:r[0],inspDate:r[1],regnNo:r[2],model:r[3],driver:r[4],mobile:r[5],vendor:r[6],emailSent:r[7],adminApproval:r[8],deployment:r[9],remarks:r[10]||''}}
+
+function csvParse(txt){
+  const lines=txt.split('\n').map(l=>l.trim()).filter(Boolean);
+  let hi=0;
+  for(let i=0;i<Math.min(15,lines.length);i++){if(/S\.?No|Regn|Driver|Model/i.test(lines[i])){hi=i;break;}}
+  const rows=[];
+  for(let i=hi+1;i<lines.length;i++){
+    const c=csvLine(lines[i]);
+    if(!c[2])continue;
+    rows.push({sno:c[0],inspDate:c[1],regnNo:c[2],model:c[3],driver:c[4],mobile:c[5],vendor:c[6],emailSent:c[7],adminApproval:c[8],deployment:c[9],remarks:c[10]||''});
+  }
+  return rows.filter(r=>r.regnNo);
+}
+function csvLine(l){const r=[];let c='',q=false;for(const ch of l){if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c='';}else c+=ch;}r.push(c.trim());return r;}
+
+async function loadData(){
+  document.getElementById('badge').textContent='⟳ LOADING';
+  document.getElementById('badge').className='live-badge';
+  document.getElementById('lbar').className='load-bar-inner anim';
+  document.getElementById('meta').textContent='Connecting to Google Sheets...';
+
+  let gotLive=false;
+  for(const mkUrl of PROXIES){
+    try{
+      const res=await fetch(mkUrl(SHEET_CSV),{signal:AbortSignal.timeout(7000)});
+      const txt=await res.text();
+      if(txt&&txt.length>200&&!txt.includes('<!DOCTYPE')&&!txt.includes('<html')){
+        data=csvParse(txt);
+        gotLive=true;
+        break;
+      }
+    }catch(e){}
+  }
+
+  if(gotLive){
+    document.getElementById('badge').textContent='● LIVE';
+    document.getElementById('badge').className='live-badge live';
+    document.getElementById('meta').textContent='Live · '+new Date().toLocaleTimeString();
+    document.getElementById('src-dot').className='src-dot';
+    document.getElementById('src-label').textContent='🔗 Live data from Google Sheets · auto-refreshes every 60s';
+  }else{
+    data=FB.map(toRow);
+    document.getElementById('badge').textContent='⚡ CACHED';
+    document.getElementById('badge').className='live-badge error';
+    document.getElementById('meta').textContent='Sheet unreachable · showing cached data';
+    document.getElementById('src-dot').className='src-dot warn';
+    document.getElementById('src-label').innerHTML='⚠ Could not reach Google Sheet. Showing embedded data (104 vehicles). To get live data: <strong>File → Share → Publish to web → Entire document → CSV</strong>, then refresh.';
+  }
+
+  document.getElementById('lbar').className='load-bar-inner';
+  build();
+}
+
+function getS(r){
+  const rem=(r.remarks||'').toLowerCase();
+  if(rem.includes('suspend')||rem.includes('not update')||rem.includes('not respond'))return'issue';
+  if(r.deployment?.trim())return'deployed';
+  if(r.adminApproval?.trim())return'pending-deploy';
+  if(r.emailSent?.trim())return'pending-citi';
+  return'pending-profile';
+}
+function badgeHtml(s,dep){
+  return{deployed:`<span class="badge bd">✓ Deployed ${dep}</span>`,issue:`<span class="badge bi">⚠ Issue</span>`,'pending-deploy':`<span class="badge bpd">⏳ Pending Deploy</span>`,'pending-citi':`<span class="badge bc">⏳ Awaiting Citi</span>`,'pending-profile':`<span class="badge bp">○ Profile Pending</span>`}[s]||'';
+}
+function pct(a,b){return b?Math.round(a/b*100)+'%':'0%';}
+
+function build(){
+  const n=data.length;
+  let pcp=0,pcc=0,cip=0,cic=0,dep=0,dec=0,iss=0;
+  data.forEach(r=>{
+    const s=getS(r);
+    if(s==='issue')iss++;
+    r.emailSent?.trim()?pcc++:pcp++;
+    r.adminApproval?.trim()?cic++:cip++;
+    r.deployment?.trim()?dec++:dep++;
+  });
+  document.getElementById('s-total').textContent=n;
+  document.getElementById('s-pcp').textContent=pcp; document.getElementById('s-pcc').textContent=pcc; document.getElementById('b-pc').style.width=pct(pcc,n);
+  document.getElementById('s-cip').textContent=cip; document.getElementById('s-cic').textContent=cic; document.getElementById('b-ci').style.width=pct(cic,n);
+  document.getElementById('s-dep').textContent=dep; document.getElementById('s-dec').textContent=dec; document.getElementById('b-de').style.width=pct(dec,n);
+  document.getElementById('s-iss').textContent=iss;
+  buildVendor(); buildDonut(); buildStatus(); renderTable();
+}
+
+function buildVendor(){
+  const v={};data.forEach(r=>{if(r.vendor)v[r.vendor]=(v[r.vendor]||0)+1;});
+  const s=Object.entries(v).sort((a,b)=>b[1]-a[1]).slice(0,10),mx=s[0]?.[1]||1;
+  document.getElementById('vchart').innerHTML=s.map(([n,c])=>`<div class="vbar-row"><div class="vbar-label" title="${n}">${n}</div><div class="vbar-track"><div class="vbar-fill" style="width:${(c/mx)*100}%"></div></div><div class="vbar-count">${c}</div></div>`).join('');
+}
+
+function buildDonut(){
+  const m={};data.forEach(r=>{const k=r.model||'Unknown';m[k]=(m[k]||0)+1;});
+  const e=Object.entries(m).sort((a,b)=>b[1]-a[1]);
+  const cls=['#1a1714','#1d4ed8','#b45309','#1a7a4a','#7c3aed','#b91c1c','#0369a1','#64748b'];
+  const tot=data.length,cx=55,cy=55,r=42,inn=26;
+  let ang=-Math.PI/2,p='';
+  e.forEach(([nm,cnt],i)=>{
+    const a=(cnt/tot)*2*Math.PI;
+    const x1=cx+r*Math.cos(ang),y1=cy+r*Math.sin(ang),x2=cx+r*Math.cos(ang+a),y2=cy+r*Math.sin(ang+a);
+    const xi1=cx+inn*Math.cos(ang),yi1=cy+inn*Math.sin(ang),xi2=cx+inn*Math.cos(ang+a),yi2=cy+inn*Math.sin(ang+a);
+    const lg=a>Math.PI?1:0;
+    p+=`<path d="M${xi1},${yi1} L${x1},${y1} A${r},${r} 0 ${lg} 1 ${x2},${y2} L${xi2},${yi2} A${inn},${inn} 0 ${lg} 0 ${xi1},${yi1}" fill="${cls[i%cls.length]}" stroke="#fff" stroke-width="1.5"/>`;
+    ang+=a;
+  });
+  p+=`<text x="${cx}" y="${cy+5}" text-anchor="middle" font-family="Bebas Neue" font-size="16" fill="#1a1714">${tot}</text>`;
+  document.getElementById('dsvg').innerHTML=p;
+  document.getElementById('dleg').innerHTML=e.map(([n,c],i)=>`<div class="d-leg-row"><div class="d-dot" style="background:${cls[i%cls.length]}"></div><div class="d-name">${n}</div><div class="d-val">${c}</div></div>`).join('');
+}
+
+function buildStatus(){
+  const cnt={Deployed:0,'Pend Deploy':0,'Await Citi':0,'Profile Pend':0,Issues:0};
+  const clr={Deployed:'#1a7a4a','Pend Deploy':'#9d174d','Await Citi':'#1d4ed8','Profile Pend':'#b45309',Issues:'#b91c1c'};
+  data.forEach(r=>{const s=getS(r);if(s==='deployed')cnt.Deployed++;else if(s==='pending-deploy')cnt['Pend Deploy']++;else if(s==='pending-citi')cnt['Await Citi']++;else if(s==='pending-profile')cnt['Profile Pend']++;else cnt.Issues++;});
+  const ent=Object.entries(cnt),mx=Math.max(...ent.map(e=>e[1]),1);
+  let h=`<line x1="10" y1="8" x2="10" y2="100" stroke="#e2ddd6"/><line x1="10" y1="100" x2="255" y2="100" stroke="#e2ddd6"/>`;
+  ent.forEach(([l,c],i)=>{const x=14+i*46,ht=(c/mx)*85,y=100-ht;h+=`<rect x="${x}" y="${y}" width="36" height="${ht}" fill="${clr[l]}" rx="3"/><text x="${x+18}" y="${y-4}" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#8a8279">${c}</text><text x="${x+18}" y="113" text-anchor="middle" font-family="IBM Plex Sans" font-size="8" fill="#8a8279">${l}</text>`;});
+  document.getElementById('schart').innerHTML=h;
+}
+
+function renderTable(){
+  const mc={'DZIRE':'#1a1714','ERTIGA':'#1d4ed8','HYUNDAI AURA':'#b45309','XUV 400 EV':'#1a7a4a','KIA CARENS':'#7c3aed','TIGOREV':'#b91c1c','RUMION':'#0369a1','ROMION':'#0369a1'};
+  const rows=data.filter(r=>{
+    const s=getS(r);
+    if(filt==='deployed'&&s!=='deployed')return false;
+    if(filt==='pending'&&!s.startsWith('pending'))return false;
+    if(filt==='issue'&&s!=='issue')return false;
+    const t=srch.toLowerCase();
+    return !t||Object.values(r).some(v=>String(v).toLowerCase().includes(t));
+  });
+  document.getElementById('tcount').textContent=`Showing ${rows.length} of ${data.length}`;
+  document.getElementById('tbody').innerHTML=rows.map((r,i)=>{
+    const s=getS(r),c=mc[r.model]||'#555';
+    return `<tr><td class="sno">${r.sno||i+1}</td><td class="mono">${r.inspDate||'—'}</td><td><span class="regn">${r.regnNo||'—'}</span></td><td><span class="mtag" style="border-color:${c};color:${c}">${r.model||'—'}</span></td><td style="font-weight:500">${r.driver||'—'}</td><td class="mono">${r.mobile||'—'}</td><td style="color:var(--muted)">${r.vendor||'—'}</td><td class="mono">${r.emailSent||'—'}</td><td class="mono">${r.adminApproval||'—'}</td><td class="mono">${r.deployment||'—'}</td><td>${badgeHtml(s,r.deployment)}</td><td class="rem">${r.remarks||''}</td></tr>`;
+  }).join('');
+}
+
+function sf(f,btn){filt=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
+function st(v){srch=v;renderTable();}
+
+loadData();
+setInterval(loadData,60000);
+</script>
+</body>
+</html>
